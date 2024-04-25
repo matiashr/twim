@@ -14,8 +14,8 @@
 
 App::App():
 	m_quit(false),
-	m_buffers{},
-	ci(0)
+	ci(0),
+	m_buffers{}
 {
 
 	setup();

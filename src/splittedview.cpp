@@ -124,22 +124,22 @@ void SplittedView::endSash()
 void SplittedView::setSash( bool up )
 {
 	int x,y;
-	int rows, cols;
-	decl->getWindowSize(rows,cols);
+	int sizey, sizex ;
+	decl->getWindowSize(sizex,sizey);
 
 	decl->setBoxed(true);
-	if( !up && (rows >20 )) {
-		decl->resizeWindow(rows-10, COLS);
-		impl->getWindowSize(rows,cols);
-		impl->resizeWindow(rows+10, COLS);
-		impl->getWindowPos(x,y);
-		impl->moveWindow(x-10,y);
+	if( !up && (sizey >10 )) {
+		decl->resizeWindow(sizey-10, sizex);
+		impl->resizeWindow(sizey+10, sizex);
+		decl->getWindowPos(x,y);
+		decl->getWindowSize(sizex,sizey);
+		impl->moveWindow(x, y+sizey);
 	} else {
-		decl->resizeWindow(rows+10, COLS);
-		impl->getWindowSize(rows,cols);
-		impl->resizeWindow(rows-10, COLS);
-		impl->getWindowPos(x,y);
-		impl->moveWindow(x+10,y);
+		decl->resizeWindow(sizey+10, sizex);
+		impl->resizeWindow(sizey-10, sizex);
+		decl->getWindowPos(x,y);
+		decl->getWindowSize(sizex,sizey);
+		impl->moveWindow(x, y+sizey);
 	}
 	refreshScreen();
 }
