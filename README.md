@@ -15,10 +15,12 @@ TC specific commands
 :md	    - delete method
 :mn	    - create new method
 :is	    - insert statement
+:id         - insert declaration
 
 q or escape - cancel dialog
 
 CTRL+w w     - switch between declaration/implementation
+CTRL+w + UP/DOWN - same as above
 
 :! command   - execute command
 :!>command   - execute command and insert output to buffer
