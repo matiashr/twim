@@ -9,9 +9,10 @@ libuuid-dev
 libncurses-dev
 libxml2-dev
 
-installation
+installation&build
 ================
-liblexilla.so is dynamically loaded must be found by the editor
+$sudo apt-get install libuuid-dev libncurses-dev libxml2-dev
+$make
 
 
 TC specific commands
