@@ -305,6 +305,7 @@ bool XmlFile::saveToMem(std::string obj, std::string decl, std::string impl)
 bool XmlFile::saveAs( std::string name )
 {
 	getApp().setStatus("save as "+name);
+	return false;
 }
 
 static inline void vectorErase(StringVector& v, std::string str )
@@ -341,6 +342,7 @@ bool XmlFile::deleteObject( std::string name )
 bool XmlFile::XmlFile::reload()
 {
 	getApp().setStatus("reloaded");
+	return false;
 }
 
 bool XmlFile::createObject( std::string name, enum XmlFile::ObjectType type )

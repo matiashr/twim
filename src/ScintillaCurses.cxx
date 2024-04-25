@@ -20,6 +20,7 @@
 #include "Scintilla.h"
 #include "SciLexer.h"
 #include "Lexilla.h"
+#include "config.h"
 
 namespace Scintilla::Internal 
 {
@@ -136,9 +137,13 @@ namespace Scintilla::Internal
 	}
 	void ScintillaCurses::Initialise() 
 	{
-		char lexilla_path[] = "../lexilla/bin/" LEXILLA_LIB LEXILLA_EXTENSION;
+		char lexilla_path[] = LEXILLA_LIB_PATH LEXILLA_LIB LEXILLA_EXTENSION;
 		void *lexilla = dlopen(lexilla_path, RTLD_LAZY);
 		lexer = (Lexilla::CreateLexerFn)dlsym(lexilla, LEXILLA_CREATELEXER);		
+		if( lexer == NULL ) {
+			printf("Failed to locate %s\n", lexilla_path );
+			exit(1);
+		}
 	}
 	// Disable drag and drop since it is not implemented.
 	void ScintillaCurses::StartDrag() 

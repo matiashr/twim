@@ -1,8 +1,8 @@
 /*
-	WndProc() defined at
-	../scintilla/src/Editor.cxx
+   WndProc() defined at
+   ../scintilla/src/Editor.cxx
 
-*/
+ */
 #include <unistd.h>
 #include <ncurses.h>
 #include <menu.h>
@@ -80,7 +80,7 @@ void TEditor::getWindowPos( int&x ,int &y )
 {
 	getbegyx(sci.GetWINDOW(),x,y);
 }
-		
+
 std::string TEditor::getName() { return m_xfile->file;};
 
 void TEditor::Initialise()
@@ -92,47 +92,47 @@ void TEditor::Initialise()
 
 	StyleSetForeground(SCE_STTXT_DEFAULT,     DEFAULT_FG);
 	StyleSetBackground(SCE_STTXT_DEFAULT,     DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_NUMBER,      COL_NUMBER );
-        StyleSetBackground(SCE_STTXT_NUMBER,      DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_COMMENTLINE, COL_COMMENT);
-        StyleSetBackground(SCE_STTXT_COMMENTLINE, DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_COMMENT,     COL_COMMENT);
-        StyleSetBackground(SCE_STTXT_COMMENT,     DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_STRING1,     COL_STRING );
-        StyleSetBackground(SCE_STTXT_STRING1,     DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_STRING2,     COL_STRING );
-        StyleSetBackground(SCE_STTXT_STRING2,     DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_NUMBER,      COL_NUMBER );
+	StyleSetBackground(SCE_STTXT_NUMBER,      DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_COMMENTLINE, COL_COMMENT);
+	StyleSetBackground(SCE_STTXT_COMMENTLINE, DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_COMMENT,     COL_COMMENT);
+	StyleSetBackground(SCE_STTXT_COMMENT,     DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_STRING1,     COL_STRING );
+	StyleSetBackground(SCE_STTXT_STRING1,     DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_STRING2,     COL_STRING );
+	StyleSetBackground(SCE_STTXT_STRING2,     DEFAULT_BG);
 
-        StyleSetForeground(SCE_STTXT_KEYWORD,     COL_KEYWORDS);
-        StyleSetBackground(SCE_STTXT_KEYWORD, 	  DEFAULT_BG);
- 
-        StyleSetForeground(SCE_STTXT_IDENTIFIER,  COL_IDENTIFIER);
-        StyleSetBackground(SCE_STTXT_IDENTIFIER,  DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_KEYWORD,     COL_KEYWORDS);
+	StyleSetBackground(SCE_STTXT_KEYWORD, 	  DEFAULT_BG);
+
+	StyleSetForeground(SCE_STTXT_IDENTIFIER,  COL_IDENTIFIER);
+	StyleSetBackground(SCE_STTXT_IDENTIFIER,  DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_PRAGMA,  	  COL_IDENTIFIER);
-        StyleSetBackground(SCE_STTXT_PRAGMA, 	  DEFAULT_BG);
+	StyleSetBackground(SCE_STTXT_PRAGMA, 	  DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_PRAGMAS,  	  COL_IDENTIFIER);
-        StyleSetBackground(SCE_STTXT_PRAGMAS, 	  DEFAULT_BG);
+	StyleSetBackground(SCE_STTXT_PRAGMAS, 	  DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_HEXNUMBER,   COL_NUMBER);
-        StyleSetBackground(SCE_STTXT_HEXNUMBER,   DEFAULT_BG);
+	StyleSetBackground(SCE_STTXT_HEXNUMBER,   DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_DATETIME,    COL_NUMBER);
-        StyleSetBackground(SCE_STTXT_DATETIME,    DEFAULT_BG);
+	StyleSetBackground(SCE_STTXT_DATETIME,    DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_FUNCTION, 	  COL_NUMBER);
-        StyleSetBackground(SCE_STTXT_FUNCTION, 	  DEFAULT_BG);
+	StyleSetBackground(SCE_STTXT_FUNCTION, 	  DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_CHARACTER,   COL_IDENTIFIER);
-        StyleSetBackground(SCE_STTXT_CHARACTER,   DEFAULT_BG);
+	StyleSetBackground(SCE_STTXT_CHARACTER,   DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_TYPE, 	  COL_IDENTIFIER);
-        StyleSetBackground(SCE_STTXT_TYPE, 	  DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_VARS, 	  COL_NUMBER);
-        StyleSetBackground(SCE_STTXT_VARS,	  DEFAULT_BG);
-        StyleSetForeground(SCE_STTXT_OPERATOR,    COL_OPERATOR);
+	StyleSetBackground(SCE_STTXT_TYPE, 	  DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_VARS, 	  COL_NUMBER);
+	StyleSetBackground(SCE_STTXT_VARS,	  DEFAULT_BG);
+	StyleSetForeground(SCE_STTXT_OPERATOR,    COL_OPERATOR);
 	StyleSetBackground(SCE_STTXT_OPERATOR,    DEFAULT_BG);
 	StyleSetForeground(SCE_STTXT_FB, 	  COL_NUMBER);
 	StyleSetBackground(SCE_STTXT_FB,	  DEFAULT_BG);
 
 
 	// line no column
-        StyleSetForeground(STYLE_LINENUMBER, 0);
-        StyleSetBackground(STYLE_LINENUMBER, wxColour(60,50,59) );
+	StyleSetForeground(STYLE_LINENUMBER, 0);
+	StyleSetBackground(STYLE_LINENUMBER, wxColour(60,50,59) );
 
 	// caret style
 	StyleSetCaret(CARETSTYLE_OVERSTRIKE_BLOCK);
@@ -149,7 +149,7 @@ void TEditor::Initialise()
 	StyleEnableFolding();
 
 
-	SetLexer("fcST"); //Should be this??
+	//SetLexer("fcST"); //Should be this??
 	SetLexer("cpp");
 	sci.SendMsg(SCI_STYLESETBOLD, SCE_STTXT_KEYWORD, 1);		// bold keywords
 }
@@ -168,7 +168,7 @@ inline bool fexists(const std::string& name)
 void TEditor::open()
 {
 	bool exists=fexists(m_xfile->file);
-	
+
 	if( !exists )  {
 		//create a default template
 #if 0
@@ -225,21 +225,21 @@ void TEditor:: StyleSetCaret( uptr_t car )
 void TEditor::SetKeyWordsList()
 {
 	keywords=  "RETURN FOR WHILE BREAK CONTINUE IF THIS THIS^ METHOD END_METHOD END_PROGRAM END_FUNCTION_BLOCK "\
-		   "CASE OF UINT_TO_BOOL BOOL_TO_INT BOOL_TO_UINT BOOL_TO_DINT DINT_TO_INT "\
-		   "LINT_TO_STRING LTIME_TO_STRING LWORD_TO_HEXSTRING "\
-		   "SIZEOF TRUE FALSE RETURN EXIT TO BY "\
-		   "DINT_TO_STRING INT_TO_STRING INT_TO_BOOL BOOL_TO_INT "\
-		   "END_CASE END_FOR END_WHILE END_IF DO AND OR ADR THEN ELSE ELSIF <> TRUE FALSE NOT ";
-///	keywords+=keywords.lower();
+		    "CASE OF UINT_TO_BOOL BOOL_TO_INT BOOL_TO_UINT BOOL_TO_DINT DINT_TO_INT "\
+		    "LINT_TO_STRING LTIME_TO_STRING LWORD_TO_HEXSTRING "\
+		    "SIZEOF TRUE FALSE RETURN EXIT TO BY "\
+		    "DINT_TO_STRING INT_TO_STRING INT_TO_BOOL BOOL_TO_INT "\
+		    "END_CASE END_FOR END_WHILE END_IF DO AND OR ADR THEN ELSE ELSIF <> TRUE FALSE NOT ";
+	///	keywords+=keywords.lower();
 	keywords +="INT UDINT BYTE WORD INT ARRAY ARRAY POINTER T_MaxString PUBLIC AT %Q* %I* "\
-		   "VAR_GLOBAL PROGRAM INTERFACE STRUCT VOID STRING "\
-		   "TYPE END_TYPE INT UINT UDINT DINT FLOAT USINT ULINT DATE LWORD SINT TIME WSTRING " \
-		   "VOID CHAR BYTE VAR END_VAR NOT TODO LREAL USINT OF TIME_OF_DAY VAR_GLOBAL "\
-		   "IMPLEMENTS EXTENDS FUNCTION_BLOCK "\
-		   "METHOD VAR_INPUT VAR_OUTPUT VAR_TEMP END_VAR VAR_IN_OUT "\
-		   "TRUE FALSE BOOL LWORD TO REFERENCE "\
-		   "FUNCTION "\
-		   "CONSTANT END_STRUCT UNION END_UNION";
+		    "VAR_GLOBAL PROGRAM INTERFACE STRUCT VOID STRING "\
+		    "TYPE END_TYPE INT UINT UDINT DINT FLOAT USINT ULINT DATE LWORD SINT TIME WSTRING " \
+		    "VOID CHAR BYTE VAR END_VAR NOT TODO LREAL USINT OF TIME_OF_DAY VAR_GLOBAL "\
+		    "IMPLEMENTS EXTENDS FUNCTION_BLOCK "\
+		    "METHOD VAR_INPUT VAR_OUTPUT VAR_TEMP END_VAR VAR_IN_OUT "\
+		    "TRUE FALSE BOOL LWORD TO REFERENCE "\
+		    "FUNCTION "\
+		    "CONSTANT END_STRUCT UNION END_UNION";
 	sci.WndProc( Scintilla::Message::SetKeyWords, 1, (sptr_t)keywords.c_str() );
 }
 
@@ -619,27 +619,27 @@ void TEditor::handleNormal( int c )
 					ok=false;
 				}break;
 			case KEY_UP:
-			{
-				if(visual ) {
-					int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
-					sci.SendMsg(SCI_LINEUPEXTEND, 0, pos);
-					setStatus("Up");
-					ok=false;
-				} else {
-					c = SCK_UP;
-				}
-			}break;
+				{
+					if(visual ) {
+						int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+						sci.SendMsg(SCI_LINEUPEXTEND, 0, pos);
+						setStatus("Up");
+						ok=false;
+					} else {
+						c = SCK_UP;
+					}
+				}break;
 			case KEY_DOWN:
-			{
-				if(visual ) {
-					int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
-					sci.SendMsg(SCI_LINEDOWNEXTEND, 0, pos);
-					setStatus("Down");
-					ok=false;
-				} else {
-					c = SCK_DOWN;
-				}
-			}break;
+				{
+					if(visual ) {
+						int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+						sci.SendMsg(SCI_LINEDOWNEXTEND, 0, pos);
+						setStatus("Down");
+						ok=false;
+					} else {
+						c = SCK_DOWN;
+					}
+				}break;
 
 			case KEY_LEFT: c = SCK_LEFT;break;
 			case KEY_RIGHT:c = SCK_RIGHT;break;
@@ -683,24 +683,24 @@ void TEditor::handleNormal( int c )
 				       ok=false;
 				       break;
 			case 7:
-				{
-					int lines=sci.SendMsg(SCI_GETLINECOUNT, 0, 0);
-					werase(statusWin);
-					int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
-					int x,y;
-					getWindowSize(x,y );
-					mvwprintw(statusWin, 0, 0, "file:%s entity:%s pos:%d lines:%d \t win:(%d,%d)", 
-								m_xfile->file.c_str(), 
-								m_viewName.c_str(), 
-								pos,
-								lines, 
-								x, 
-								y );
-					wrefresh(statusWin);
-					ok=false;
-				}break;
+				       {
+					       int lines=sci.SendMsg(SCI_GETLINECOUNT, 0, 0);
+					       werase(statusWin);
+					       int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+					       int x,y;
+					       getWindowSize(x,y );
+					       mvwprintw(statusWin, 0, 0, "file:%s entity:%s pos:%d lines:%d \t win:(%d,%d)", 
+							       m_xfile->file.c_str(), 
+							       m_viewName.c_str(), 
+							       pos,
+							       lines, 
+							       x, 
+							       y );
+					       wrefresh(statusWin);
+					       ok=false;
+				       }break;
 			case 'J':	   
-				setStatus("join");
+				       setStatus("join");
 				       sci.SendMsg(SCI_LINESJOIN, 0, 0);
 				       ok=false;
 				       break;
@@ -710,11 +710,11 @@ void TEditor::handleNormal( int c )
 				       ok=false;
 				       break;
 			case 'A':
-				{
-					sci.SendMsg(SCI_LINEEND, 0, 0);
-					mode = INSERT;
-					ok=false;
-				}break;
+				       {
+					       sci.SendMsg(SCI_LINEEND, 0, 0);
+					       mode = INSERT;
+					       ok=false;
+				       }break;
 			case 'S':
 				       sci.selectAll();
 				       ok=false;
@@ -761,11 +761,11 @@ void TEditor::handleNormal( int c )
 			case 'g':
 				       sci.gotoLine(0);
 				       ok=false;
-				break;
+				       break;
 			case 'G':
 				       sci.gotoLine(100000);
 				       ok=false;
-				break;
+				       break;
 			case '.':
 				       sci.redo();
 				       ok=false;
@@ -800,22 +800,22 @@ void TEditor::handleNormal( int c )
 			case 'x': c= SCK_DELETE;break;
 			case 'd':
 				  {
-					setStatus(":d");
-					int c;
-					while ((c= wgetch(sci.GetWINDOW())) != 10) {
-						if( c == 'd' ) {
-							setStatus("Delete line");
-							sci.SendMsg(SCI_LINEDELETE, 0, 0);
-							break;
-						} else if( c == 'w' ) {
-							setStatus("Delete word");
-							sci.SendMsg(SCI_DELWORDRIGHT, 0, 0);
-							break;
-						} else {
-							setStatus("No such cmd");
-						}
-					}
-					ok=false;
+					  setStatus(":d");
+					  int c;
+					  while ((c= wgetch(sci.GetWINDOW())) != 10) {
+						  if( c == 'd' ) {
+							  setStatus("Delete line");
+							  sci.SendMsg(SCI_LINEDELETE, 0, 0);
+							  break;
+						  } else if( c == 'w' ) {
+							  setStatus("Delete word");
+							  sci.SendMsg(SCI_DELWORDRIGHT, 0, 0);
+							  break;
+						  } else {
+							  setStatus("No such cmd");
+						  }
+					  }
+					  ok=false;
 				  }break;
 			case ':':
 				  {
@@ -832,19 +832,19 @@ void TEditor::handleNormal( int c )
 			sci.KeyPress( c, static_cast<Scintilla::KeyMod>(SCMOD_NORM));
 		}
 	}
-/* 
-	MEVENT mouse;
-else if (getmouse(&mouse) == OK) {
-		int event = SCM_DRAG, button = 0;
-		if (mouse.bstate & BUTTON1_PRESSED)
-			event = SCM_PRESS, button = 1;
-		else if (mouse.bstate & BUTTON1_RELEASED)
-			event = SCM_RELEASE, button = 1;
-		bool shift = mouse.bstate & BUTTON_SHIFT;
-		bool ctrl = mouse.bstate & BUTTON_CTRL;
-		bool alt = mouse.bstate & BUTTON_ALT;
-		int modifiers = (shift ? SCMOD_SHIFT : 0) | (ctrl ? SCMOD_CTRL : 0) | (alt ? SCMOD_ALT : 0);
-		//scintilla_send_mouse(buffer.sci, event, button, modifiers, mouse.y, mouse.x);
+	/* 
+	   MEVENT mouse;
+	   else if (getmouse(&mouse) == OK) {
+	   int event = SCM_DRAG, button = 0;
+	   if (mouse.bstate & BUTTON1_PRESSED)
+	   event = SCM_PRESS, button = 1;
+	   else if (mouse.bstate & BUTTON1_RELEASED)
+	   event = SCM_RELEASE, button = 1;
+	   bool shift = mouse.bstate & BUTTON_SHIFT;
+	   bool ctrl = mouse.bstate & BUTTON_CTRL;
+	   bool alt = mouse.bstate & BUTTON_ALT;
+	   int modifiers = (shift ? SCMOD_SHIFT : 0) | (ctrl ? SCMOD_CTRL : 0) | (alt ? SCMOD_ALT : 0);
+	//scintilla_send_mouse(buffer.sci, event, button, modifiers, mouse.y, mouse.x);
 	} */
 }
 
@@ -856,7 +856,7 @@ int TEditor::getCurrentLine()
 
 size_t TEditor::lineLength(int line)
 {
-	 return sci.SendMsg(SCI_LINELENGTH, line, 0);	
+	return sci.SendMsg(SCI_LINELENGTH, line, 0);	
 }
 
 void TEditor::handleInsert( int c )
@@ -873,13 +873,13 @@ void TEditor::handleInsert( int c )
 			case ASCII_ESC: ok=false; mode = COMMAND;break;
 			case 262:	//home
 			case 360:	//end
-				ok=false;
-				sci.SendMsg(SCI_LINEEND, 0, 0);
-				break;
+					ok=false;
+					sci.SendMsg(SCI_LINEEND, 0, 0);
+					break;
 			case KEY_BACKSPACE: 
-				ok=false;
-				sci.SendMsg(SCI_DELETEBACK, 0, 0);
-				break;
+					ok=false;
+					sci.SendMsg(SCI_DELETEBACK, 0, 0);
+					break;
 
 
 		}

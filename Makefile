@@ -72,6 +72,7 @@ LINK.o = $(LD) $(OBJECTS) $(LDFLAGS) $(LDLIBS) -o $@
 
 .PHONY: all
 all: $(BIN)/$(EXE)
+	cp lexilla/bin/*.so bin
 
 $(BIN)/$(EXE): $(SRC) $(OBJ) $(BIN) $(OBJECTS)
 	$(LINK.o)
