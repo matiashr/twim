@@ -139,7 +139,7 @@ namespace Scintilla::Internal
 	{
 		char lexilla_path[] = LEXILLA_LIB_PATH LEXILLA_LIB LEXILLA_EXTENSION;
 		void *lexilla = dlopen(lexilla_path, RTLD_LAZY);
-		lexer = (Lexilla::CreateLexerFn)dlsym(lexilla, LEXILLA_CREATELEXER);		
+		lexer = CreateLexer; //(Lexilla::CreateLexerFn)dlsym(lexilla, LEXILLA_CREATELEXER);		
 		if( lexer == NULL ) {
 			printf("Failed to locate %s\n", lexilla_path );
 			exit(1);

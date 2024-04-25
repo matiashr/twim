@@ -109,21 +109,16 @@ bool XmlFile::parsePou(std::string entity, xmlNode* node)
 		}
 		std::string elementName=std::string((char*)currentNode->name);
 		if( elementName == "Declaration" ) {
-			xmlChar* data = getCDATAContent(currentNode);
-			if( data != NULL) {
-				body.declaration = (char*)getCDATAContent(currentNode);
-				body.declNode    = currentNode;
-			}
+			body.declNode    = currentNode;
+			body.declaration =  std::string( (char*)xmlNodeGetContent(body.declNode) );
 		} else if( elementName == "Implementation") {
 			xmlNodePtr ST = getChild( currentNode, "ST");
 			//printf("ST=%x\n", ST);
-			xmlChar* data = xmlNodeGetContent(currentNode); //getCDATAContent(currentNode);
-			if( data != NULL) {
-				body.implementation = (char*)data;
-				body.implNode  = currentNode;
-			}
+			body.implNode  = currentNode;
+			body.implementation =  std::string( (char*)xmlNodeGetContent(body.implNode) ); //getCDATAContent(currentNode);
 		}
 	}
+	
 	m_primary  = entity;
 	body.name  = entity;
 	body.parent= node;
@@ -233,25 +228,21 @@ void XmlFile::saveBody()
 	std::string decl=m_objects[ou].declaration;
 	std::string impl=m_objects[ou].implementation;
 
+	if( m_objects.find(ou) == m_objects.end() ) {
+		getApp().setStatus("Object not found?");
+		return;
+	}
+
 	xmlNodeSetContent( m_objects[ou].declNode, (const xmlChar *)"" );
 	xmlNodeSetContent( m_objects[ou].implNode, (const xmlChar *)"" );
 	xmlNodePtr cdataDecl = xmlNewCDataBlock( doc, (xmlChar*)decl.c_str(), decl.size() );
-	xmlAddChild( m_objects[ou].declNode, cdataDecl );
+	auto parent = m_objects[ou].declNode;
+	xmlAddChild( parent, cdataDecl );
 
 	xmlNodePtr ST = xmlNewNode(NULL, (xmlChar*) "ST");
 	xmlNodePtr cdataImpl = xmlNewCDataBlock( doc, (xmlChar*)impl.c_str(), impl.size() );
 	xmlAddChild( ST, cdataImpl);
 	xmlAddChild( m_objects[ou].implNode, ST);
-
-	if( 0 ) {
-		FILE* fd = fopen("debug", "w");
-		if( fd ) {
-			char* d = nodeToString(root);
-			fprintf(fd,"%s\n -----ORG -----\n%s", d, decl.c_str() );
-			fclose(fd);
-		}
-
-	}
 }
 
 void XmlFile::saveMembers()

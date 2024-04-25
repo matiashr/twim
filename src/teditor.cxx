@@ -642,10 +642,36 @@ void TEditor::handleNormal( int c )
 					}
 				}break;
 
-			case KEY_LEFT: c = SCK_LEFT;break;
-			case KEY_RIGHT:c = SCK_RIGHT;break;
-			case 10:       c = SCK_DOWN;break;
-			case 32:       c = SCK_RIGHT;break;
+			case KEY_RIGHT:
+				if( visual ) {
+					int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+					sci.SendMsg(SCI_WORDRIGHTEXTEND, 0, pos);
+					setStatus("Down");
+					ok=false;
+				} else {
+					c = SCK_RIGHT;
+				}break;
+			case KEY_LEFT:c = SCK_LEFT;break;
+			case 10:  
+				       if( visual ) {
+						int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+						sci.SendMsg(SCI_LINEDOWNEXTEND, 0, pos);
+						setStatus("Down");
+						ok=false;
+				       } else {     
+					       c = SCK_DOWN;
+				       }
+				       break;
+			case 32:
+				       {
+					       if( visual ) {
+						       int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+						       sci.SendMsg(SCI_WORDRIGHTEXTEND, 0, pos);
+						       c = SCK_RIGHT;
+					       } else {
+						       c = SCK_RIGHT;
+					       }
+				       }break;
 			case KEY_BACKSPACE: 
 				       c= SCK_LEFT;
 				       break;
@@ -883,6 +909,12 @@ void TEditor::handleInsert( int c )
 					ok=false;
 					sci.SendMsg(SCI_LINEEND, 0, 0);
 					break;
+			case 330:
+					{
+						int pos = sci.SendMsg(SCI_GETCURRENTPOS, 0, 0);
+						sci.SendMsg(SCI_DELETERANGE, pos, 1);
+						ok=false;
+					}break;
 			case KEY_BACKSPACE: 
 					ok=false;
 					sci.SendMsg(SCI_DELETEBACK, 0, 0);
