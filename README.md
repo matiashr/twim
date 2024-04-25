@@ -9,6 +9,11 @@ libuuid-dev
 libncurses-dev
 libxml2-dev
 
+installation
+================
+liblexilla.so is dynamically loaded must be found by the editor
+
+
 TC specific commands
 ====================
 :ml	    - list methods
