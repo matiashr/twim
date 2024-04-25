@@ -20,9 +20,11 @@ class App
 		void setStatus(std::string msg );
 		void showDialog(std::string msg );
 		bool fileExists(std::string f);
+		void setExecutablePath( std::string path ) { m_exePath = path;}
 	private:
 		void setStatusWindow( SplittedView* fn, int rows, int cols );
 	private:
+		std::string m_exePath;
 		bool m_quit;
 		SplittedView* current;
 		uint32_t ci;

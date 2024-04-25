@@ -40,6 +40,7 @@ int main(int argc,char**argv )
 				exit(1);
 			}
 		}
+		a.setExecutablePath(argv[0]);
 		a.New( argv[1] );
 		signal(SIGINT, usignal );
 		a.run();
