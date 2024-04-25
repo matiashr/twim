@@ -21,8 +21,9 @@ class App
 		void showDialog(std::string msg );
 		bool fileExists(std::string f);
 		void setExecutablePath( std::string path ) { m_exePath = path;}
+		void getTerminalSize(int&x, int&y);
 	private:
-		void setStatusWindow( SplittedView* fn, int rows, int cols );
+		void setStatusWindow( SplittedView* fn  );
 	private:
 		std::string m_exePath;
 		bool m_quit;

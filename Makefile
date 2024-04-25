@@ -3,7 +3,7 @@ BACKEND=.
 EXTERNAL=../../
 
 # executable name
-EXE = tcedit
+EXE = twim 
 
 # C compiler
 CC = gcc

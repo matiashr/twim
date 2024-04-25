@@ -18,6 +18,7 @@
 #include "app.h"
 #include "templates.h"
 #include "file.h"
+#include "config.h"
 
 #define ASCII_ESC 27
 
@@ -38,7 +39,7 @@
 #define COL_KEYWORDS	wxColour(0x00, 0xff, 0x00)
 
 
-TEditor::TEditor( App* app, SplittedView* xf):
+TEditor::TEditor( App* app, SplittedView* xf, bool isTop):
 	m_app(app), 
 	m_xfile(xf),
 	visual(false),
@@ -52,7 +53,7 @@ TEditor::TEditor( App* app, SplittedView* xf):
 	sci.NoutRefresh();
 	int rows, cols;
 	getmaxyx(sci.GetWINDOW(), rows, cols);
-	wresize(sci.GetWINDOW(), rows-1, cols);
+	resizeWindow( rows-1, cols-1);
 	wrefresh(sci.GetWINDOW() );
 }
 
@@ -63,22 +64,22 @@ TEditor::~TEditor()
 // x = row, y =col
 void TEditor::moveWindow( int x, int y )
 {
-	mvwin(sci.GetWINDOW(), x, y ); 
+	mvwin(sci.GetWINDOW(), y, x ); 
 }
 
-void TEditor::resizeWindow(int x, int y )
+void TEditor::resizeWindow(int lines, int cols )
 {
-	wresize(sci.GetWINDOW(), x, y );
+	wresize(sci.GetWINDOW(), lines, cols );
 }
 
 void TEditor::getWindowSize( int&x ,int &y )
 {
-	getmaxyx(sci.GetWINDOW(),x,y);
+	getmaxyx(sci.GetWINDOW(),y,x);
 }
 
 void TEditor::getWindowPos( int&x ,int &y )
 {
-	getbegyx(sci.GetWINDOW(),x,y);
+	getbegyx(sci.GetWINDOW(),y,x);
 }
 
 std::string TEditor::getName() { return m_xfile->file;};
@@ -271,9 +272,7 @@ void TEditor::activate()
 
 void TEditor::setStatus(std::string msg )
 {
-	werase(statusWin);
-	mvwprintw(statusWin, 0, 0, "%s",msg.c_str() );
-	wrefresh(statusWin);
+	m_app->setStatus(msg);
 }
 
 // input from window, use prompt
@@ -281,6 +280,7 @@ bool TEditor::inputWindow(std::string prompt,  WINDOW* win, std::string& m)
 {
 	int ch;
 	keypad(win, TRUE);
+	mvwprintw(win, STATUS_WIN_Y_OFFS, STATUS_WIN_X_OFFS, "%s%s",prompt.c_str(), m.c_str() );
 	while ((ch = wgetch(win)) != '\n') {
 		if (ch == KEY_BACKSPACE || ch == KEY_DC || ch == 127) {
 			if( !m.empty() ) {
@@ -304,7 +304,7 @@ bool TEditor::inputWindow(std::string prompt,  WINDOW* win, std::string& m)
 			m.push_back( (char)ch);
 		}
 		werase(win);
-		mvwprintw(win, 0, 0, "%s%s",prompt.c_str(), m.c_str() );
+		mvwprintw(win, 0, STATUS_WIN_X_OFFS, "%s%s",prompt.c_str(), m.c_str() );
 		wrefresh(win);
 		m_app->getViewMgr()->refreshScreen();
 	}
@@ -314,9 +314,7 @@ bool TEditor::inputWindow(std::string prompt,  WINDOW* win, std::string& m)
 
 std::string TEditor::inputCommand(std::string msg )
 {
-	werase(statusWin);
-	mvwprintw(statusWin, 0, 0, "%s",msg.c_str() );
-	wrefresh(statusWin);
+	setStatus(msg);
 	std::string rv;
 	if( inputWindow(":",statusWin, rv) ){
 		return rv;
@@ -327,9 +325,7 @@ std::string TEditor::inputCommand(std::string msg )
 void TEditor::inputSearch(std::string msg )
 {
 	std::string m;
-	werase(statusWin);
-	mvwprintw(statusWin, 0, 0, "%s",msg.c_str() );
-	wrefresh(statusWin);
+	setStatus(msg);
 	int ch;
 	while ((ch = wgetch(statusWin)) != '\n') {
 		if( ch == KEY_BACKSPACE ) {
@@ -594,6 +590,11 @@ void TEditor::handleNormal( int c )
 	if (c != KEY_MOUSE) {
 		bool ok=true;
 		switch(c) {
+			case KEY_RESIZE:
+			{
+				setStatus("Window was resized");	
+				ok=false;
+			}break;
 			case 23:	//ctrl+w
 				{
 					setStatus("ctrl+w - resize using +/-");	
@@ -821,7 +822,7 @@ void TEditor::handleNormal( int c )
 				  {
 					  std::string data = inputCommand(":");
 					  execCommand( data );
-					  ok=false;				
+					  ok=false;
 				  }break;
 			default:
 				  ok=false;
@@ -866,6 +867,12 @@ void TEditor::handleInsert( int c )
 		bool ok=true;
 		switch( c) 
 		{
+			case KEY_RESIZE:
+			{
+				setStatus("Window was resized");	
+				ok=false;
+			}break;
+
 			case KEY_UP:   c = SCK_UP;break;
 			case KEY_DOWN: c = SCK_DOWN;break;
 			case KEY_LEFT: c = SCK_LEFT;break;

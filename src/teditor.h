@@ -9,7 +9,7 @@ class SplittedView;
 class TEditor 
 {
 	public:
-		TEditor( App* app, SplittedView* file);
+		TEditor( App* app, SplittedView* file, bool isTop=false);
 		virtual ~TEditor();
 		void handleNormal( int c );
 		void handleInsert( int c );

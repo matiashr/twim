@@ -10,7 +10,7 @@
 #include "teditor.h"
 #include "app.h"
 #include "file.h"
-
+#include "config.h"
 
 App::App():
 	m_quit(false),
@@ -31,24 +31,27 @@ void App::quit()
 	m_quit=true;
 }
 
-void App::setStatusWindow( SplittedView* fn, int rows, int cols ) 
+void App::setStatusWindow( SplittedView* fn  ) 
 {
 	TEditor* decl = fn->getView(DECLARATION);
 	TEditor* impl = fn->getView(IMPLEMENTATION);
 	// create status line
-	statusWin = newwin(1, cols, rows, 0);
+	int rows, cols;
+	getTerminalSize(rows, cols );		//default size for win is fullscreen
+
+	statusWin = newwin(1, cols, rows-1, STATUS_WIN_X_OFFS);
 	scrollok(statusWin, FALSE); // Disable scrolling for the status window
 	decl->setStatusLine( statusWin);
 	impl->setStatusLine( statusWin);
 	std::string statusMsg = "Status: Ready";
-	mvwprintw(statusWin, 0, 0, "%s", statusMsg.c_str());
+	mvwprintw(statusWin, 0, STATUS_WIN_X_OFFS, "%s", statusMsg.c_str());
 	wrefresh(statusWin);
 }
 
 void App::setStatus(std::string msg )
 {
 	werase(statusWin);
-	mvwprintw(statusWin, 0, 0, "%s",msg.c_str() );
+	mvwprintw(statusWin, 0, STATUS_WIN_X_OFFS, "%s",msg.c_str() );
 	wrefresh(statusWin);
 }
 
@@ -77,6 +80,11 @@ void App::showDialog(std::string msg )
 	endwin();
 }
 
+void App::getTerminalSize(int&rows, int&cols)
+{
+	getmaxyx(stdscr, rows, cols);
+}
+
 // create new buffer
 SplittedView* App::New(std::string name)
 {
@@ -88,22 +96,24 @@ SplittedView* App::New(std::string name)
 	}
 	struct SplittedView* fn = new SplittedView;
 	fn->file = name;
-	fn->setEditor(view_e::DECLARATION, new TEditor(this, fn) );
-	fn->setEditor(view_e::IMPLEMENTATION, new TEditor(this, fn) );
+	fn->setEditor(view_e::DECLARATION, new TEditor(this, fn, true) );
+	fn->setEditor(view_e::IMPLEMENTATION, new TEditor(this, fn, false) );
 
 	int rows, cols;
 	TEditor* decl = fn->getView( view_e::DECLARATION);
 	TEditor* impl = fn->getView( view_e::IMPLEMENTATION);
-	decl->getWindowSize(rows, cols );		//default size for win is fullscreen
-	decl->resizeWindow( 11, cols);
+	getTerminalSize(rows, cols );		//default size for win is fullscreen
+	
+	decl->resizeWindow( (rows/10 ), cols);
 	decl->moveWindow(0,0);
+	decl->setBoxed(false);
+	//hline(0, rows-(rows/10)+1 );
+	impl->resizeWindow( rows-(rows/10)-2, cols);
+	impl->moveWindow(0, (rows/10)+1);
+	impl->setBoxed(false);
 
-//	fn->impl->setBoxed(true);
-	impl->resizeWindow( rows-12, cols);
-	impl->moveWindow(12,0);
-	setStatusWindow( fn, rows,cols  );
+	setStatusWindow( fn );
 	m_buffers.push_back(fn);
-
 	impl->Refresh();
 	decl->Refresh();
 	current = fn;
